@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Healthy Arms – Youth Arm Care Routine</title>
+  <meta name="description" content="Free 10-minute arm care routine and Pitch Smart rest rules for youth baseball coaches (ages 8–14).">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== HEADER + DISCLAIMER (shows on every screen and on printouts) ===== -->
+  <header class="site-header">
+    <h1>⚾ Healthy Arms</h1>
+    <p class="tagline">A free 10-minute arm care routine for youth coaches (ages 8–14)</p>
+  </header>
+
+  <div class="disclaimer" role="note">
+    <strong>Educational only, not medical advice.</strong>
+    This app is for injury <em>prevention</em>. It does not diagnose or treat anything.
+  </div>
+
+  <main>
+
+    <!-- ===== SCREEN 1: THE FORM ===== -->
+    <section id="setup" class="card">
+      <h2>Build a plan</h2>
+      <p class="muted">No names, no accounts. Nothing you type here is saved or sent anywhere.</p>
+
+      <form id="plan-form" novalidate>
+        <label for="age">Player age</label>
+        <select id="age" required>
+          <option value="">Choose age…</option>
+          <option>8</option><option>9</option><option>10</option>
+          <option>11</option><option>12</option><option>13</option><option>14</option>
+        </select>
+
+        <fieldset>
+          <legend>Main position</legend>
+          <label class="choice"><input type="radio" name="pos" value="pitcher" required> Pitcher</label>
+          <label class="choice"><input type="radio" name="pos" value="catcher"> Catcher</label>
+          <label class="choice"><input type="radio" name="pos" value="position"> Position player</label>
+        </fieldset>
+
+        <label for="days">Practice / game days per week</label>
+        <select id="days" required>
+          <option value="">Choose…</option>
+          <option>1</option><option>2</option><option>3</option>
+          <option>4</option><option>5</option><option>6</option>
+        </select>
+
+        <!-- The safety gate: this must be answered every time -->
+        <fieldset class="arm-check">
+          <legend>Arm check (every time)</legend>
+          <p>How is the player feeling today?</p>
+          <label class="choice"><input type="radio" name="hurt" value="good" required> Feeling good</label>
+          <label class="choice"><input type="radio" name="hurt" value="body"> Tired or a little sore in the legs or body (not the throwing arm)</label>
+          <label class="choice"><input type="radio" name="hurt" value="arm"> Pain, soreness, or tingling in the arm, shoulder, elbow, or neck — or an injury</label>
+        </fieldset>
+
+        <p id="form-error" class="error" role="alert" hidden></p>
+        <button type="submit" class="btn btn-primary">Show the plan</button>
+      </form>
+    </section>
+
+    <!-- ===== SCREEN 2: STOP (pain / soreness / injury) ===== -->
+    <section id="stop" class="card stop" hidden>
+      <h2>🛑 Stop</h2>
+      <p class="stop-message">Stop throwing and tell a parent. See a doctor or athletic trainer.</p>
+      <p>This app does not give exercises when a player has pain, soreness, or an injury.</p>
+      <button type="button" class="btn" id="stop-back">Back to start</button>
+    </section>
+
+    <!-- ===== SCREEN 3: THE PLAN ===== -->
+    <section id="plan" hidden>
+
+      <div class="card">
+        <span id="track-badge" class="track-badge"></span>
+        <h2 id="plan-title">Your plan</h2>
+        <p id="plan-summary" class="muted"></p>
+        <div class="actions no-print">
+          <button type="button" class="btn btn-primary" id="print-btn">🖨️ Print</button>
+          <button type="button" class="btn btn-primary" id="share-btn">🔗 Share with parents</button>
+          <button type="button" class="btn" id="restart-btn">Start over</button>
+        </div>
+        <p id="share-status" class="muted no-print" aria-live="polite"></p>
+      </div>
+
+      <!-- Shown only when the arm check says "tired or sore legs/body" -->
+      <div id="today-banner" class="card banner" hidden>
+        <strong>Light day.</strong> Do the routine, keep throwing easy, and no pitching today.
+        If anything in the arm starts to hurt, stop and tell a parent.
+      </div>
+
+      <!-- Routine is built by app.js -->
+      <div class="card">
+        <h2>Before throwing: 10-minute routine</h2>
+        <p class="muted">Slow and smooth beats fast. Tap ▶ Watch to see how it's done.</p>
+        <div id="routine"></div>
+        <div id="position-notes"></div>
+      </div>
+
+      <!-- After-throwing stretches are built by app.js -->
+      <div class="card">
+        <h2>After throwing: tight shoulders &amp; neck</h2>
+        <p class="muted">About 5 minutes. A stretch feeling is OK — pain is not. Hold still, no bouncing.
+          Tingling or numbness down the arm means stop.</p>
+        <div id="after"></div>
+      </div>
+
+      <p class="hurt-line no-print">
+        Arm hurts at any point? <button type="button" class="link-btn" id="hurt-btn">Tap here</button>
+      </p>
+
+      <!-- Weekly plan is built by app.js -->
+      <div class="card page-break">
+        <h2>Weekly plan</h2>
+        <p class="muted">Suggested days — move them to match your real schedule.</p>
+        <div id="week"></div>
+      </div>
+
+      <!-- Pitch Smart rules are built by app.js -->
+      <div class="card">
+        <h2>Pitch count &amp; rest rules</h2>
+        <div id="pitch-smart"></div>
+
+        <div class="calc no-print">
+          <h3>Rest-day calculator</h3>
+          <label for="pitches">Pitches thrown in today's game</label>
+          <input type="number" id="pitches" min="0" max="200" inputmode="numeric" placeholder="e.g. 42">
+          <p id="calc-result" aria-live="polite"></p>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- ===== FOOTER (on every screen) ===== -->
+  <footer class="site-footer">
+    <p><strong>Educational only, not medical advice.</strong> Always follow your league's rules and a doctor's or athletic trainer's advice.</p>
+    <p>Privacy: this app collects no names and no personal data. It only counts how many plans are made, anonymously.</p>
+    <p>Pitch count rules come from <a href="https://www.mlb.com/pitch-smart/pitching-guidelines" target="_blank" rel="noopener">MLB / USA Baseball Pitch Smart</a>.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
